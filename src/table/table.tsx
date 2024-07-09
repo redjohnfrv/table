@@ -2,18 +2,18 @@ import {
   Table as MUITable,
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
   Checkbox,
   Button,
-  Toolbar,
 } from "@material-ui/core";
 import { useState } from "react";
-import { useGetUsers } from "../../hooks/useGetUsers.ts";
-import { CreateEditModal } from "../create-edit-modal/create-edit-modal.tsx";
+import { CreateEditModal } from "../components/create-edit-modal";
+import { ActionToolbar } from "../components/action-toolbar";
+import { TableHeader } from "../components/table-header";
+import { useGetUsers } from "../api/hooks/useGetUsers.ts";
 
 export const Table = () => {
-  const users = useGetUsers();
+  const { users, refetch } = useGetUsers();
   const [selectedIds, setSelectedIds] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,40 +31,11 @@ export const Table = () => {
 
   return (
     <div>
-      <Toolbar>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setIsOpen(true)}
-        >
-          Button 1
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => console.log(2)}
-        >
-          Button 2
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => console.log(3)}
-        >
-          Button 3
-        </Button>
-      </Toolbar>
+      <ActionToolbar open={() => setIsOpen(true)} />
 
       <MUITable>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Count</TableCell>
-            <TableCell>DateAt</TableCell>
-            <TableCell>DateUntil</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
+        <TableHeader />
+
         <TableBody>
           {users.map((item) => (
             <TableRow key={item.id}>
@@ -112,7 +83,13 @@ export const Table = () => {
         </TableBody>
       </MUITable>
 
-      <CreateEditModal onClose={() => setIsOpen(false)} isOpen={isOpen} />
+      {isOpen && (
+        <CreateEditModal
+          onSuccess={refetch}
+          onClose={() => setIsOpen(false)}
+          isOpen={isOpen}
+        />
+      )}
     </div>
   );
 };

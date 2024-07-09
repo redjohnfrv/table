@@ -1,11 +1,11 @@
-import { getUsersFromApi } from "../api";
 import { useEffect, useState } from "react";
-import { TableUser } from "../api/dto.ts";
+import { TableUser } from "../dto.ts";
+import { getUsersFromApi } from "../api.ts";
 
 export const useGetUsers = () => {
   const [users, setUsers] = useState<TableUser[]>([]);
 
-  async function fetchUsersAndUser() {
+  async function fetchUsers() {
     const usersData = await getUsersFromApi();
 
     if (usersData?.length) {
@@ -22,8 +22,11 @@ export const useGetUsers = () => {
   }
 
   useEffect(() => {
-    fetchUsersAndUser();
+    fetchUsers();
   }, []);
 
-  return users || [];
+  return {
+    users: users || [],
+    refetch: fetchUsers,
+  };
 };

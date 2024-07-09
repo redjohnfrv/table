@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.dialog {
+    max-width: 840px;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
