@@ -33,9 +33,9 @@ export const Table = () => {
 
   return (
     <div>
-      <ActionToolbar з open={() => setIsOpen(true)} selectedIds={selectedIds} />
+      <ActionToolbar open={() => setIsOpen(true)} selectedIds={selectedIds} />
 
-      {users?.length && (
+      {!users?.length && (
         <div className={css.noUsers}>
           <h4>Пользователи отсутствуют</h4>
           <h1>:(</h1>

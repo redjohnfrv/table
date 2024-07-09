@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { TableUser } from '../dto.ts'
 import { getUsersFromApi } from '../api.ts'
+import { TableUser } from '../../table/types.ts'
 
 export const useGetUsers = () => {
   const [users, setUsers] = useState<TableUser[]>([])

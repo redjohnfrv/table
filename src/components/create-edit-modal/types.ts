@@ -1,6 +1,6 @@
 export type CreateEditFormData = {
-  id?: string
-  username?: string
+  tgUserId?: number
+  tgUsername?: string
   tgChatId?: number
   maxMessagesCount?: number
   restrictedUntil?: string

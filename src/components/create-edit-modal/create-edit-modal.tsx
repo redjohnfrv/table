@@ -14,6 +14,8 @@ import css from './create-edit-modal.module.css'
 import { CreateEditFormData } from './types.ts'
 import { useGetChats } from '../../api/hooks/useGetChats.ts'
 import { useCreateUser } from '../../api/hooks/useCreateUser.ts'
+import { CreateEditUser } from '../../api/dto.ts'
+import { toast } from 'react-toastify'
 
 type CreateEditModalProps = {
   onClose: () => void
@@ -34,14 +36,22 @@ export const CreateEditModal = ({
     // Handle form submission here
     console.log(data)
 
-    const dataModified = {
-      ...data,
-      ...(data?.maxMessagesCount
-        ? { maxMessagesCount: Number(data.maxMessagesCount) }
-        : {}),
+    // TODO: restrictedUntil and expiresAt incompatible
+    const dataModified: CreateEditUser = {
+      tgUserId: Number(data?.tgUserId),
+      tgUsername: data?.tgUsername,
+      tgChatId: data?.tgChatId,
+      expiresAt: data?.restrictedUntil,
+      maxMessagesCount: Number(data.maxMessagesCount),
+      isRestricted: false,
+      adminTitle: data?.adminTitle,
     }
 
     await createUser(dataModified)
+
+    toast('Пользователь успешно создан!', {
+      type: 'success',
+    })
 
     onSuccess()
     onClose()
@@ -53,7 +63,7 @@ export const CreateEditModal = ({
       <DialogContent>
         <form className={css.form}>
           <Controller
-            name="id"
+            name="tgUserId"
             control={control}
             render={({ field: { onChange } }) => (
               <div className={css.label}>
@@ -63,7 +73,7 @@ export const CreateEditModal = ({
             )}
           />
           <Controller
-            name="username"
+            name="tgUsername"
             control={control}
             render={({ field: { onChange } }) => (
               <div className={css.label}>

@@ -7,14 +7,8 @@ export type User = {
   restrictedAt?: string
   restrictedUntil?: string
   id?: string
-}
-
-export type TableUser = {
-  id?: string
-  name?: string
-  count?: number
-  dateAt?: string
-  dateUntil?: string
+  isRestricted?: boolean
+  expiresAt?: string
 }
 
 export type Chat = {
@@ -27,8 +21,8 @@ export type CreateEditUser = {
   tgUserId?: number
   tgUsername?: string
   tgChatId?: number
+  isRestricted?: boolean
   adminTitle?: string
   maxMessagesCount?: number
-  restrictedAt?: string
-  restrictedUntil?: string
+  expiresAt?: string
 }
