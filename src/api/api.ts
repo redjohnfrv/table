@@ -3,8 +3,6 @@ import { fetchData, postData } from "./utils.ts";
 
 const api = import.meta.env.VITE_API_URL;
 
-console.log(api);
-
 export async function getUsersFromApi(): Promise<User[]> {
   const url = `${api}/verified-users`;
 
