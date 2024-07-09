@@ -1,4 +1,4 @@
-import { Table } from "./components/table/table.tsx";
+import { Table } from "./components/table";
 
 function App() {
   return <Table />;

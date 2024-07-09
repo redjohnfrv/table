@@ -9,15 +9,13 @@ import {
   Toolbar,
 } from "@material-ui/core";
 import { useState } from "react";
-
-const data = [
-  { id: 5, name: "Item 1", count: 5, date: "2022-01-01" },
-  { id: 66, name: "Item 2", count: 10, date: "2022-02-01" },
-  { id: 123, name: "Item 3", count: 8, date: "2022-03-01" },
-];
+import { useGetUsers } from "../../hooks/useGetUsers.ts";
+import { CreateEditModal } from "../create-edit-modal/create-edit-modal.tsx";
 
 export const Table = () => {
+  const users = useGetUsers();
   const [selectedIds, setSelectedIds] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCheckboxChange = (event, itemId) => {
     if (event.target.checked) {
@@ -31,15 +29,13 @@ export const Table = () => {
     console.log(item);
   };
 
-  console.log(selectedIds);
-
   return (
     <div>
       <Toolbar>
         <Button
           variant="contained"
           color="primary"
-          onClick={() => console.log(1)}
+          onClick={() => setIsOpen(true)}
         >
           Button 1
         </Button>
@@ -64,12 +60,13 @@ export const Table = () => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Count</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell>DateAt</TableCell>
+            <TableCell>DateUntil</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
+          {users.map((item) => (
             <TableRow key={item.id}>
               <TableCell>
                 <Checkbox
@@ -78,7 +75,8 @@ export const Table = () => {
                 {item.name}
               </TableCell>
               <TableCell>{item.count}</TableCell>
-              <TableCell>{item.date}</TableCell>
+              <TableCell>{item.dateAt}</TableCell>
+              <TableCell>{item.dateUntil}</TableCell>
               <TableCell>
                 <Button
                   onClick={() => handleClick(item)}
@@ -113,6 +111,8 @@ export const Table = () => {
           ))}
         </TableBody>
       </MUITable>
+
+      <CreateEditModal onClose={() => setIsOpen(false)} isOpen={isOpen} />
     </div>
   );
 };
