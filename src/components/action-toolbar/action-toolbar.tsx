@@ -1,28 +1,25 @@
-import { Button, Toolbar } from "@material-ui/core";
+import { Button, Toolbar } from '@material-ui/core'
+import css from './action-toolbar.module.css'
 
 type ActionToolbarProps = {
-  open: () => void;
-  isCreating: boolean;
-};
+  open: () => void
+  selectedIds: string[]
+}
 
-export const ActionToolbar = ({ open, isCreating }: ActionToolbarProps) => {
+export const ActionToolbar = ({ open, selectedIds }: ActionToolbarProps) => {
   return (
-    <Toolbar>
-      <Button
-        disabled={isCreating}
-        variant="contained"
-        color="primary"
-        onClick={open}
-      >
+    <Toolbar className={css.toolbar}>
+      <Button variant="contained" color="primary" onClick={open}>
         Создать
       </Button>
       <Button
+        disabled={!selectedIds?.length}
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={() => console.log(2)}
       >
-        Button 2
+        Удалить
       </Button>
     </Toolbar>
-  );
-};
+  )
+}

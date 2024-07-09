@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
-import { Chat } from "../dto.ts";
-import { getChatsFromApi } from "../api.ts";
+import { useEffect, useState } from 'react'
+import { Chat } from '../dto.ts'
+import { getChatsFromApi } from '../api.ts'
 
 export const useGetChats = () => {
-  const [chats, setChats] = useState<Chat[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [chats, setChats] = useState<Chat[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   async function fetchChats() {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    const chatsData = await getChatsFromApi();
+    const chatsData = await getChatsFromApi()
 
     if (chatsData?.length) {
-      setChats(chatsData);
+      setChats(chatsData)
     }
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    fetchChats();
-  }, []);
+    fetchChats()
+  }, [])
 
   return {
     chats,
     isLoading,
-  };
-};
+  }
+}

@@ -1,1 +1,1 @@
-export { CreateEditModal } from "./create-edit-modal.tsx";
+export { CreateEditModal } from './create-edit-modal.tsx'

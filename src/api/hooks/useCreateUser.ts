@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { Chat, User } from "../dto.ts";
-import { createUserFromApi, getChatsFromApi } from "../api.ts";
+import { useState } from 'react'
+import { User } from '../dto.ts'
+import { createUserFromApi } from '../api.ts'
 
 export const useCreateUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   async function createUser(data: User) {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await createUserFromApi(data);
+    await createUserFromApi(data)
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return {
     createUser,
     isLoading,
-  };
-};
+  }
+}

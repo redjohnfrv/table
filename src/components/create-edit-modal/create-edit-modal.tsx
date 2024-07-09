@@ -8,44 +8,44 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@material-ui/core";
-import { Controller, useForm } from "react-hook-form";
-import css from "./create-edit-modal.module.css";
-import { CreateEditFormData } from "./types.ts";
-import { useGetChats } from "../../api/hooks/useGetChats.ts";
-import { useCreateUser } from "../../api/hooks/useCreateUser.ts";
+} from '@material-ui/core'
+import { Controller, useForm } from 'react-hook-form'
+import css from './create-edit-modal.module.css'
+import { CreateEditFormData } from './types.ts'
+import { useGetChats } from '../../api/hooks/useGetChats.ts'
+import { useCreateUser } from '../../api/hooks/useCreateUser.ts'
 
 type CreateEditModalProps = {
-  onClose: () => void;
-  isOpen: boolean;
-  onSuccess: () => void;
-};
+  onClose: () => void
+  isOpen: boolean
+  onSuccess: () => void
+}
 
 export const CreateEditModal = ({
   onClose,
   isOpen,
   onSuccess,
 }: CreateEditModalProps) => {
-  const { handleSubmit, control, reset } = useForm<CreateEditFormData>();
-  const { chats, isLoading } = useGetChats();
-  const { isLoading: isCreating, createUser } = useCreateUser();
+  const { handleSubmit, control } = useForm<CreateEditFormData>()
+  const { chats, isLoading } = useGetChats()
+  const { isLoading: isCreating, createUser } = useCreateUser()
 
   const onSubmit = async (data: CreateEditFormData) => {
     // Handle form submission here
-    console.log(data);
+    console.log(data)
 
     const dataModified = {
       ...data,
       ...(data?.maxMessagesCount
         ? { maxMessagesCount: Number(data.maxMessagesCount) }
         : {}),
-    };
+    }
 
-    await createUser(dataModified);
+    await createUser(dataModified)
 
-    onSuccess();
-    onClose();
-  };
+    onSuccess()
+    onClose()
+  }
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
@@ -122,7 +122,9 @@ export const CreateEditModal = ({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onClose}>ОТМЕНА</Button>
+        <Button onClick={onClose} color="secondary">
+          ОТМЕНА
+        </Button>
         <Button
           disabled={isCreating}
           type="submit"
@@ -132,5 +134,5 @@ export const CreateEditModal = ({
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}

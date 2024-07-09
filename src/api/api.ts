@@ -1,43 +1,43 @@
-import { Chat, CreateEditUser, User } from "./dto.ts";
-import { fetchData, postData } from "./utils.ts";
+import { Chat, CreateEditUser, User } from './dto.ts'
+import { fetchData, postData } from './utils.ts'
 
-const api = import.meta.env.VITE_API_URL;
+const api = import.meta.env.VITE_API_URL
 
 export async function getUsersFromApi(): Promise<User[]> {
-  const url = `${api}/verified-users`;
+  const url = `${api}/verified-users`
 
   try {
-    const users = await fetchData(url);
+    const users = await fetchData(url)
 
-    return users;
+    return users
   } catch (error) {
-    console.error(error);
-    return [];
+    console.error(error)
+    return []
   }
 }
 
 export async function getChatsFromApi(): Promise<Chat[]> {
-  const url = `${api}/chats`;
+  const url = `${api}/chats`
 
   try {
-    const chats = await fetchData(url);
+    const chats = await fetchData(url)
 
-    return chats;
+    return chats
   } catch (error) {
-    console.error(error);
-    return [];
+    console.error(error)
+    return []
   }
 }
 
 export async function createUserFromApi(data: CreateEditUser) {
-  const url = `${api}/verified-users`;
+  const url = `${api}/verified-users`
 
   try {
-    const createdUser = await postData<User>(url, data);
+    const createdUser = await postData<User>(url, data)
 
-    return createdUser;
+    return createdUser
   } catch (error) {
-    console.error(error);
-    return [];
+    console.error(error)
+    return []
   }
 }

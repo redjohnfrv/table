@@ -1,1 +1,1 @@
-export { TableHeader } from "./table-header.tsx";
+export { TableHeader } from './table-header.tsx'
