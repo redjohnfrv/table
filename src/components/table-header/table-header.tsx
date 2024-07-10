@@ -3,8 +3,8 @@ import { TableCell, TableHead, TableRow } from '@material-ui/core'
 const labels = [
   'Имя пользователя',
   'Кол-во сообщений',
-  'Ограничен до',
-  'Действия',
+  'Истекает',
+  'Заблокировать на',
 ]
 
 export const TableHeader = () => {

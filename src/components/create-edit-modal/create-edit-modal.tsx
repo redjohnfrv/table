@@ -39,13 +39,7 @@ export const CreateEditModal = ({
       maxMessagesCount: Number(data.maxMessagesCount),
     }
 
-    const response = await createUser(dataModified)
-
-    if ((response as User)?.id) {
-      toast('Пользователь успешно создан!', {
-        type: 'success',
-      })
-    }
+    await createUser(dataModified)
 
     onSuccess()
     onClose()

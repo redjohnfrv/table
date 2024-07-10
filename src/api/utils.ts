@@ -35,9 +35,17 @@ export async function fetchData(url: string): Promise<any> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function postData<T>(url: string, data: T): Promise<any> {
+export async function postData<T>(
+  url: string,
+  data: T,
+  successMessage?: string,
+): Promise<any> {
   try {
     const response: AxiosResponse = await axios.post(url, data)
+
+    toast(successMessage, {
+      type: 'success',
+    })
 
     return response.data
   } catch (error: AxiosError) {

@@ -14,9 +14,14 @@ import { useGetUsers } from '../api/hooks/useGetUsers.ts'
 import css from './table.module.css'
 import { useDeleteUser } from '../api/hooks/useDeleteUser.ts'
 import { ConfirmModal } from '../components/confirm-modal'
+import { useRestrictUser } from '../api/hooks/useRestrictUser.ts'
+import { RestrictTo } from './types.ts'
+import { useUnRestrictUser } from '../api/hooks/useUnRestrictUser.ts'
 
 export const Table = () => {
   const { users, refetch, isLoading: isUsersLoading } = useGetUsers()
+  const { restrictUser, isLoading: isRestricting } = useRestrictUser()
+  const { unRestrictUser, isLoading: isUnRestricting } = useUnRestrictUser()
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [targetId, setIsTargetId] = useState<string | null>(null)
   const [isCreateEditModalOpen, setIsCreateEditModalOpen] = useState(false)
@@ -43,6 +48,18 @@ export const Table = () => {
     }
   }
 
+  const handleRestrictUser = async (uuid, hours: RestrictTo) => {
+    await restrictUser(uuid, hours)
+
+    await refetch()
+  }
+
+  const handleUnRestrictUser = async (uuid) => {
+    await unRestrictUser(uuid)
+
+    await refetch()
+  }
+
   return (
     <div>
       <ActionToolbar
@@ -61,38 +78,59 @@ export const Table = () => {
         <MUITable>
           <TableHeader />
           <TableBody>
-            {users.map((item) => (
-              <TableRow key={item.id}>
+            {users.map((user) => (
+              <TableRow key={user.id}>
                 <TableCell>
                   <Checkbox
-                    onChange={(event) => handleCheckboxChange(event, item.id)}
+                    onChange={(event) => handleCheckboxChange(event, user.id)}
                   />
-                  {item.name}
+                  {user.name}
                 </TableCell>
-                <TableCell>{item.count}</TableCell>
-                <TableCell>{item.dateAt}</TableCell>
+                <TableCell>{user.count}</TableCell>
+                <TableCell>{user.dateAt}</TableCell>
                 <TableCell>
+                  {user.isRestricted ? (
+                    <Button
+                      disabled={isUnRestricting}
+                      className={css.actionButton}
+                      onClick={() => handleUnRestrictUser(user.id)}
+                      variant="contained"
+                      color="default"
+                      size="small"
+                    >
+                      Разблокировать
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        disabled={isRestricting}
+                        className={css.actionButton}
+                        onClick={() =>
+                          handleRestrictUser(user.id, RestrictTo.THREE_HOURS)
+                        }
+                        variant="contained"
+                        color="default"
+                        size="small"
+                      >
+                        3 часа
+                      </Button>
+                      <Button
+                        disabled={isRestricting}
+                        className={css.actionButton}
+                        onClick={() =>
+                          handleRestrictUser(user.id, RestrictTo.THREE_DAYS)
+                        }
+                        variant="contained"
+                        color="default"
+                        size="small"
+                      >
+                        3 дня
+                      </Button>{' '}
+                    </>
+                  )}
                   <Button
                     className={css.actionButton}
-                    onClick={() => handleClick(item)}
-                    variant="contained"
-                    color="default"
-                    size="small"
-                  >
-                    3 часа
-                  </Button>
-                  <Button
-                    className={css.actionButton}
-                    onClick={() => handleClick(item)}
-                    variant="contained"
-                    color="default"
-                    size="small"
-                  >
-                    3 дня
-                  </Button>
-                  <Button
-                    className={css.actionButton}
-                    onClick={() => handleClick(item)}
+                    onClick={() => handleClick(user)}
                     color="primary"
                     variant="contained"
                     size="small"
@@ -103,7 +141,7 @@ export const Table = () => {
                     className={css.actionButton}
                     disabled={isDeleting}
                     onClick={() => {
-                      setIsTargetId(item.id!)
+                      setIsTargetId(user.id!)
                       setIsDeleteModalOpen(true)
                     }}
                     variant="contained"

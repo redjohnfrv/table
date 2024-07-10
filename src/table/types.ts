@@ -4,4 +4,10 @@ export type TableUser = {
   count?: number
   dateAt?: string
   dateUntil?: string
+  isRestricted?: boolean
+}
+
+export enum RestrictTo {
+  THREE_HOURS = 3,
+  THREE_DAYS = 72,
 }

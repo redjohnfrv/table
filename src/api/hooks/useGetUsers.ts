@@ -18,6 +18,7 @@ export const useGetUsers = () => {
           name: data.tgUsername || 'unknown',
           count: data.maxMessagesCount,
           dateAt: data.expiresAt,
+          isRestricted: data.isRestricted,
         })),
       )
     }
