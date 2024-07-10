@@ -2,14 +2,17 @@ import { Button, Toolbar } from '@material-ui/core'
 import css from './action-toolbar.module.css'
 
 type ActionToolbarProps = {
-  open: () => void
+  openCreateEditModal: () => void
   selectedIds: string[]
 }
 
-export const ActionToolbar = ({ open, selectedIds }: ActionToolbarProps) => {
+export const ActionToolbar = ({
+  openCreateEditModal,
+  selectedIds,
+}: ActionToolbarProps) => {
   return (
     <Toolbar className={css.toolbar}>
-      <Button variant="contained" color="primary" onClick={open}>
+      <Button variant="contained" color="primary" onClick={openCreateEditModal}>
         Создать
       </Button>
       <Button

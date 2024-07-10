@@ -1,5 +1,6 @@
 import { Chat, CreateEditUser, User } from './dto.ts'
-import { fetchData, postData } from './utils.ts'
+import { deleteData, fetchData, postData } from './utils.ts'
+import { toast } from 'react-toastify'
 
 const api = import.meta.env.VITE_API_URL
 
@@ -36,6 +37,17 @@ export async function createUserFromApi(data: CreateEditUser) {
     const createdUser = await postData<User>(url, data)
 
     return createdUser
+  } catch (error) {
+    console.error(error)
+    return []
+  }
+}
+
+export async function deleteUserFromApi(uuid: string) {
+  const url = `${api}/verified-users/${uuid}`
+
+  try {
+    await deleteData(url)
   } catch (error) {
     console.error(error)
     return []

@@ -46,3 +46,20 @@ export async function postData<T>(url: string, data: T): Promise<any> {
     return null
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function deleteData(url: string): Promise<any> {
+  try {
+    const response: AxiosResponse = await axios.delete(url)
+
+    toast('Удалено!', {
+      type: 'success',
+    })
+
+    return response.data
+  } catch (error: AxiosError) {
+    toastError(error)
+
+    return null
+  }
+}
