@@ -14,7 +14,7 @@ import css from './create-edit-modal.module.css'
 import { CreateEditFormData } from './types.ts'
 import { useGetChats } from '../../api/hooks/useGetChats.ts'
 import { useCreateUser } from '../../api/hooks/useCreateUser.ts'
-import { CreateEditUser } from '../../api/dto.ts'
+import { CreateEditUser, User } from '../../api/dto.ts'
 import { toast } from 'react-toastify'
 
 type CreateEditModalProps = {
@@ -33,25 +33,19 @@ export const CreateEditModal = ({
   const { isLoading: isCreating, createUser } = useCreateUser()
 
   const onSubmit = async (data: CreateEditFormData) => {
-    // Handle form submission here
-    console.log(data)
-
-    // TODO: restrictedUntil and expiresAt incompatible
     const dataModified: CreateEditUser = {
+      ...data,
       tgUserId: Number(data?.tgUserId),
-      tgUsername: data?.tgUsername,
-      tgChatId: data?.tgChatId,
-      expiresAt: data?.restrictedUntil,
       maxMessagesCount: Number(data.maxMessagesCount),
-      isRestricted: false,
-      adminTitle: data?.adminTitle,
     }
 
-    await createUser(dataModified)
+    const response = await createUser(dataModified)
 
-    toast('Пользователь успешно создан!', {
-      type: 'success',
-    })
+    if ((response as User)?.id) {
+      toast('Пользователь успешно создан!', {
+        type: 'success',
+      })
+    }
 
     onSuccess()
     onClose()
@@ -119,7 +113,7 @@ export const CreateEditModal = ({
             )}
           />
           <Controller
-            name="restrictedUntil"
+            name="expiresAt"
             control={control}
             render={({ field: { onChange } }) => (
               <div className={css.label}>

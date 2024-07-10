@@ -1,6 +1,5 @@
 import { Chat, CreateEditUser, User } from './dto.ts'
 import { deleteData, fetchData, postData } from './utils.ts'
-import { toast } from 'react-toastify'
 
 const api = import.meta.env.VITE_API_URL
 
@@ -25,12 +24,13 @@ export async function getChatsFromApi(): Promise<Chat[]> {
 
     return chats
   } catch (error) {
-    console.error(error)
     return []
   }
 }
 
-export async function createUserFromApi(data: CreateEditUser) {
+export async function createUserFromApi(
+  data: CreateEditUser,
+): Promise<User | null> {
   const url = `${api}/verified-users`
 
   try {
@@ -38,8 +38,7 @@ export async function createUserFromApi(data: CreateEditUser) {
 
     return createdUser
   } catch (error) {
-    console.error(error)
-    return []
+    return null
   }
 }
 
@@ -49,7 +48,6 @@ export async function deleteUserFromApi(uuid: string) {
   try {
     await deleteData(url)
   } catch (error) {
-    console.error(error)
-    return []
+    return
   }
 }

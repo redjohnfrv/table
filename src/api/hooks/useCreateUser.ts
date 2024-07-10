@@ -7,9 +7,12 @@ export const useCreateUser = () => {
 
   async function createUser(data: CreateEditUser) {
     setIsLoading(true)
-    await createUserFromApi(data)
+
+    const user = await createUserFromApi(data)
 
     setIsLoading(false)
+
+    return user
   }
 
   return {

@@ -71,7 +71,6 @@ export const Table = () => {
                 </TableCell>
                 <TableCell>{item.count}</TableCell>
                 <TableCell>{item.dateAt}</TableCell>
-                <TableCell>{item.dateUntil}</TableCell>
                 <TableCell>
                   <Button
                     className={css.actionButton}

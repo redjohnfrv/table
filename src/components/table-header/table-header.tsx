@@ -3,7 +3,6 @@ import { TableCell, TableHead, TableRow } from '@material-ui/core'
 const labels = [
   'Имя пользователя',
   'Кол-во сообщений',
-  'Ограничен с',
   'Ограничен до',
   'Действия',
 ]
