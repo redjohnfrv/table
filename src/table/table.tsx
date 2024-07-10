@@ -16,7 +16,7 @@ import { useDeleteUser } from '../api/hooks/useDeleteUser.ts'
 import { ConfirmModal } from '../components/confirm-modal'
 
 export const Table = () => {
-  const { users, refetch } = useGetUsers()
+  const { users, refetch, isLoading: isUsersLoading } = useGetUsers()
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [targetId, setIsTargetId] = useState<string | null>(null)
   const [isCreateEditModalOpen, setIsCreateEditModalOpen] = useState(false)
@@ -50,7 +50,7 @@ export const Table = () => {
         selectedIds={selectedIds}
       />
 
-      {!users?.length && (
+      {!users?.length && !isUsersLoading && (
         <div className={css.noUsers}>
           <h4>Пользователи отсутствуют</h4>
           <h1>:(</h1>

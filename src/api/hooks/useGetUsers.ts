@@ -4,8 +4,11 @@ import { TableUser } from '../../table/types.ts'
 
 export const useGetUsers = () => {
   const [users, setUsers] = useState<TableUser[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   async function fetchUsers() {
+    setIsLoading(true)
+
     const usersData = await getUsersFromApi()
 
     if (usersData?.length) {
@@ -19,6 +22,8 @@ export const useGetUsers = () => {
         })),
       )
     }
+
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -28,5 +33,6 @@ export const useGetUsers = () => {
   return {
     users: users || [],
     refetch: fetchUsers,
+    isLoading,
   }
 }
