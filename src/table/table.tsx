@@ -17,6 +17,7 @@ import { ConfirmModal } from '../components/confirm-modal'
 import { useRestrictUser } from '../api/hooks/useRestrictUser.ts'
 import { RestrictTo } from './types.ts'
 import { useUnRestrictUser } from '../api/hooks/useUnRestrictUser.ts'
+import { formatDate } from '../utils'
 
 export const Table = () => {
   const { users, refetch, isLoading: isUsersLoading } = useGetUsers()
@@ -87,7 +88,13 @@ export const Table = () => {
                   {user.name}
                 </TableCell>
                 <TableCell>{user.count}</TableCell>
-                <TableCell>{user.dateAt}</TableCell>
+                <TableCell>
+                  {!!user.verifiedAt && formatDate(user.verifiedAt)}
+                </TableCell>
+                <TableCell>
+                  {!!user.restrictedUntil &&
+                    formatDate(user.restrictedUntil, true)}
+                </TableCell>
                 <TableCell>
                   {user.isRestricted ? (
                     <Button

@@ -2,9 +2,10 @@ import { TableCell, TableHead, TableRow } from '@material-ui/core'
 
 const labels = [
   'Имя пользователя',
-  'Кол-во сообщений',
-  'Истекает',
-  'Заблокировать на',
+  'Макс. сообщений',
+  'Верифицирован до',
+  'Заблокирован до',
+  '',
 ]
 
 export const TableHeader = () => {

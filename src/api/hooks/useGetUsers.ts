@@ -14,11 +14,12 @@ export const useGetUsers = () => {
     if (usersData?.length) {
       setUsers(
         usersData.map((data) => ({
-          id: data.id,
-          name: data.tgUsername || 'unknown',
-          count: data.maxMessagesCount,
-          dateAt: data.expiresAt,
-          isRestricted: data.isRestricted,
+          id: data?.id,
+          name: data?.tgUsername || 'unknown',
+          count: data?.maxMessagesCount,
+          verifiedAt: data?.expiresAt || '',
+          isRestricted: !!data?.isRestricted,
+          restrictedUntil: data?.restrictedUntil || '',
         })),
       )
     }

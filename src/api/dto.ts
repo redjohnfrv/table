@@ -7,6 +7,7 @@ export type User = {
   id?: string
   isRestricted?: boolean
   expiresAt?: string
+  restrictedUntil?: string
 }
 
 export type Chat = {
