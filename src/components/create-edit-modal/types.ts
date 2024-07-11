@@ -1,3 +1,5 @@
+import { User } from '../../api/dto.ts'
+
 export type CreateEditFormData = {
   tgUserId?: number
   tgUsername?: string
@@ -6,3 +8,8 @@ export type CreateEditFormData = {
   expiresAt?: string
   adminTitle?: string
 }
+
+export type EditFormData = Pick<
+  User,
+  'adminTitle' | 'maxMessagesCount' | 'expiresAt'
+>

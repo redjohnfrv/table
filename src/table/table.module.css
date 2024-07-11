@@ -9,3 +9,8 @@
 .actionButton {
   margin-right: 8px !important;
 }
+
+.restrictButton {
+  width: 69px;
+  margin-right: 8px !important;
+}

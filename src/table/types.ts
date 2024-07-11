@@ -5,6 +5,7 @@ export type TableUser = {
   verifiedAt?: string
   restrictedUntil?: string
   isRestricted?: boolean
+  adminTitle?: string
 }
 
 export enum RestrictTo {

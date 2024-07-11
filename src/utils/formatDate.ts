@@ -11,3 +11,7 @@ export const formatDate = (date: string, withTime?: boolean) => {
     ? `${day}.${month}.${year} ${hours}:${minutes}`
     : `${day}.${month}.${year}`
 }
+
+export const formatDateInputDefaultValue = (date: string) => {
+  return date.split('T')[0]
+}

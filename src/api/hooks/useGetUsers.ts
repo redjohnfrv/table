@@ -20,6 +20,7 @@ export const useGetUsers = () => {
           verifiedAt: data?.expiresAt || '',
           isRestricted: !!data?.isRestricted,
           restrictedUntil: data?.restrictedUntil || '',
+          adminTitle: data?.adminTitle,
         })),
       )
     }

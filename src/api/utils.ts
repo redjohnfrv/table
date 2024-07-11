@@ -71,3 +71,24 @@ export async function deleteData(url: string): Promise<any> {
     return null
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function patchData<T>(
+  url: string,
+  data: T,
+  successMessage?: string,
+): Promise<any> {
+  try {
+    const response: AxiosResponse = await axios.patch(url, data)
+
+    toast(successMessage, {
+      type: 'success',
+    })
+
+    return response.data
+  } catch (error: AxiosError) {
+    toastError(error)
+
+    return null
+  }
+}

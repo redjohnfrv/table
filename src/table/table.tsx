@@ -6,29 +6,31 @@ import {
   Checkbox,
   Button,
 } from '@material-ui/core'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { CreateEditModal } from '../components/create-edit-modal'
 import { ActionToolbar } from '../components/action-toolbar'
 import { TableHeader } from '../components/table-header'
 import { useGetUsers } from '../api/hooks/useGetUsers.ts'
-import css from './table.module.css'
 import { useDeleteUser } from '../api/hooks/useDeleteUser.ts'
 import { ConfirmModal } from '../components/confirm-modal'
 import { useRestrictUser } from '../api/hooks/useRestrictUser.ts'
 import { RestrictTo } from './types.ts'
 import { useUnRestrictUser } from '../api/hooks/useUnRestrictUser.ts'
 import { formatDate } from '../utils'
+import css from './table.module.css'
 
 export const Table = () => {
   const { users, refetch, isLoading: isUsersLoading } = useGetUsers()
   const { restrictUser, isLoading: isRestricting } = useRestrictUser()
   const { unRestrictUser, isLoading: isUnRestricting } = useUnRestrictUser()
+  const { deleteUser, isLoading: isDeleting } = useDeleteUser()
+
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [targetId, setIsTargetId] = useState<string | null>(null)
+
   const [isCreateEditModalOpen, setIsCreateEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-
-  const { deleteUser, isLoading: isDeleting } = useDeleteUser()
+  const [isEditMode, setIsEditMode] = useState(false)
 
   const handleCheckboxChange = (event, itemId) => {
     if (event.target.checked) {
@@ -36,11 +38,6 @@ export const Table = () => {
     } else {
       setSelectedIds(selectedIds.filter((id) => id !== itemId))
     }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (item: any) => {
-    console.log(item)
   }
 
   const handleDeleteUser = async () => {
@@ -61,10 +58,23 @@ export const Table = () => {
     await refetch()
   }
 
+  const targetUserDefaultValues = useMemo(() => {
+    const targetUser = users?.find((user) => user.id === targetId)
+
+    return {
+      adminTitle: targetUser?.adminTitle,
+      maxMessagesCount: targetUser?.count,
+      expiresAt: targetUser?.verifiedAt,
+    }
+  }, [targetId, users])
+
   return (
     <div>
       <ActionToolbar
-        openCreateEditModal={() => setIsCreateEditModalOpen(true)}
+        openCreateEditModal={() => {
+          setIsEditMode(false)
+          setIsCreateEditModalOpen(true)
+        }}
         selectedIds={selectedIds}
       />
 
@@ -78,6 +88,7 @@ export const Table = () => {
       {!!users?.length && (
         <MUITable>
           <TableHeader />
+
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
@@ -87,6 +98,7 @@ export const Table = () => {
                   />
                   {user.name}
                 </TableCell>
+                <TableCell>{user.adminTitle}</TableCell>
                 <TableCell>{user.count}</TableCell>
                 <TableCell>
                   {!!user.verifiedAt && formatDate(user.verifiedAt)}
@@ -111,7 +123,7 @@ export const Table = () => {
                     <>
                       <Button
                         disabled={isRestricting}
-                        className={css.actionButton}
+                        className={css.restrictButton}
                         onClick={() =>
                           handleRestrictUser(user.id, RestrictTo.THREE_HOURS)
                         }
@@ -123,7 +135,7 @@ export const Table = () => {
                       </Button>
                       <Button
                         disabled={isRestricting}
-                        className={css.actionButton}
+                        className={css.restrictButton}
                         onClick={() =>
                           handleRestrictUser(user.id, RestrictTo.THREE_DAYS)
                         }
@@ -137,7 +149,11 @@ export const Table = () => {
                   )}
                   <Button
                     className={css.actionButton}
-                    onClick={() => handleClick(user)}
+                    onClick={() => {
+                      setIsTargetId(user.id!)
+                      setIsEditMode(true)
+                      setIsCreateEditModalOpen(true)
+                    }}
                     color="primary"
                     variant="contained"
                     size="small"
@@ -169,6 +185,9 @@ export const Table = () => {
           onSuccess={refetch}
           onClose={() => setIsCreateEditModalOpen(false)}
           isOpen={isCreateEditModalOpen}
+          uuid={targetId}
+          isEditMode={isEditMode}
+          defaultValues={targetUserDefaultValues}
         />
       )}
 

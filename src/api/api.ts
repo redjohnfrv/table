@@ -1,6 +1,7 @@
 import { Chat, CreateEditUser, User } from './dto.ts'
-import { deleteData, fetchData, postData } from './utils.ts'
+import { deleteData, fetchData, patchData, postData } from './utils.ts'
 import { toast } from 'react-toastify'
+import { EditFormData } from '../components/create-edit-modal/types.ts'
 
 const api = import.meta.env.VITE_API_URL
 
@@ -53,7 +54,7 @@ export async function deleteUserFromApi(uuid: string) {
   }
 }
 
-export async function restrictUserFromApi(uuid, hours) {
+export async function restrictUserFromApi(uuid: string, hours: number) {
   const url = `${api}/verified-users/${uuid}/restrict`
 
   try {
@@ -69,11 +70,21 @@ export async function restrictUserFromApi(uuid, hours) {
   }
 }
 
-export async function unRestrictUserFromApi(uuid) {
+export async function unRestrictUserFromApi(uuid: string) {
   const url = `${api}/verified-users/${uuid}/unrestrict`
 
   try {
     await postData(url, undefined, 'Пользователь разблокирован!')
+  } catch (error) {
+    return
+  }
+}
+
+export async function editUserFromApi(uuid: string, data: EditFormData) {
+  const url = `${api}/verified-users/${uuid}`
+
+  try {
+    await patchData<User>(url, data, 'Изменения сохранены!')
   } catch (error) {
     return
   }
