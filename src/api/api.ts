@@ -1,6 +1,5 @@
 import { Chat, CreateEditUser, User } from './dto.ts'
 import { deleteData, fetchData, patchData, postData } from './utils.ts'
-import { toast } from 'react-toastify'
 import { EditFormData } from '../components/create-edit-modal/types.ts'
 
 const api = import.meta.env.VITE_API_URL

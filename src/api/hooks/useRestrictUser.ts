@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { CreateEditUser } from '../dto.ts'
-import { createUserFromApi, restrictUserFromApi } from '../api.ts'
+import { restrictUserFromApi } from '../api.ts'
 
 export const useRestrictUser = () => {
   const [isLoading, setIsLoading] = useState(false)

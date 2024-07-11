@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { CreateEditUser } from '../dto.ts'
-import { createUserFromApi, editUserFromApi } from '../api.ts'
+import { editUserFromApi } from '../api.ts'
 import { EditFormData } from '../../components/create-edit-modal/types.ts'
 
 export const useEditUser = () => {

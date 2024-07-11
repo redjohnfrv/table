@@ -35,8 +35,7 @@ export const CreateEditModal = ({
   uuid,
   defaultValues,
 }: CreateEditModalProps) => {
-  const { handleSubmit, control, reset, setValue } =
-    useForm<CreateEditFormData>()
+  const { handleSubmit, control } = useForm<CreateEditFormData>()
   const { chats, isLoading } = useGetChats()
   const { isLoading: isCreating, createUser } = useCreateUser()
   const { isLoading: isEditing, editUser } = useEditUser()
