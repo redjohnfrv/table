@@ -23,6 +23,8 @@ export const useGetUsers = () => {
           adminTitle: data?.adminTitle,
         })),
       )
+    } else {
+      setUsers([])
     }
 
     setIsLoading(false)
