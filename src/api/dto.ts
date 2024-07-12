@@ -14,6 +14,7 @@ export type Chat = {
   id: string
   telegramChatId: number
   username: string
+  title: string
 }
 
 export type CreateEditUser = {

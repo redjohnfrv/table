@@ -126,7 +126,7 @@ export const CreateEditModal = ({
                   >
                     {chats?.map((chat) => (
                       <MenuItem key={chat.id} value={chat.telegramChatId}>
-                        {chat.username}
+                        {chat.title || chat.username}
                       </MenuItem>
                     ))}
                   </Select>
