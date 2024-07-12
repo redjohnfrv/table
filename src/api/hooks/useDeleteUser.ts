@@ -6,6 +6,7 @@ export const useDeleteUser = () => {
 
   async function deleteUser(uuid: string) {
     setIsLoading(true)
+
     await deleteUserFromApi(uuid)
 
     setIsLoading(false)

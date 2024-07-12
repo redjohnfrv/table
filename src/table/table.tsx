@@ -32,6 +32,10 @@ export const Table = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
 
+  const handleRefetch = async () => {
+    setSelectedIds([]), refetch()
+  }
+
   const handleCheckboxChange = (event, itemId) => {
     if (event.target.checked) {
       setSelectedIds([...selectedIds, itemId])
@@ -76,6 +80,7 @@ export const Table = () => {
           setIsCreateEditModalOpen(true)
         }}
         selectedIds={selectedIds}
+        onSuccess={handleRefetch}
       />
 
       {!users?.length && !isUsersLoading && (

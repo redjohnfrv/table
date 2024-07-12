@@ -56,11 +56,14 @@ export async function postData<T>(
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function deleteData(url: string): Promise<any> {
+export async function deleteData<T>(
+  url: string,
+  successMessage?: string,
+): Promise<any> {
   try {
     const response: AxiosResponse = await axios.delete(url)
 
-    toast('Удалено!', {
+    toast(successMessage, {
       type: 'success',
     })
 

@@ -47,7 +47,23 @@ export async function deleteUserFromApi(uuid: string) {
   const url = `${api}/verified-users/${uuid}`
 
   try {
-    await deleteData(url)
+    await deleteData(url, 'Пользователь удален!')
+  } catch (error) {
+    return
+  }
+}
+
+export async function deleteManyUsersFromApi(uuids: string[]) {
+  const url = `${api}/verified-users/bulk-delete`
+
+  try {
+    await postData<{ usersIds: string[] }>(
+      url,
+      {
+        usersIds: uuids,
+      },
+      'Пользователи удалены!',
+    )
   } catch (error) {
     return
   }
