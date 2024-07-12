@@ -55,10 +55,10 @@ export async function postData<T>(
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function deleteData(
   url: string,
   successMessage?: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> {
   try {
     const response: AxiosResponse = await axios.delete(url)
