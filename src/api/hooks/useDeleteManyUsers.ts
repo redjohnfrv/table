@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { deleteManyUsersFromApi, deleteUserFromApi } from '../api.ts'
+import { deleteManyUsersFromApi } from '../api.ts'
 
 export const useDeleteManyUsers = () => {
   const [isLoading, setIsLoading] = useState(false)
