@@ -76,7 +76,7 @@ export const Table = () => {
   }, [targetId, users])
 
   return (
-    <div>
+    <div className={css.container}>
       <ActionToolbar
         openCreateEditModal={() => {
           setIsEditMode(false)
