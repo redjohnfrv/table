@@ -6,7 +6,7 @@ import {
   Checkbox,
   Button,
 } from '@material-ui/core'
-import { useMemo, useState } from 'react'
+import { ChangeEvent, useMemo, useState } from 'react'
 import { CreateEditModal } from '../components/create-edit-modal'
 import { ActionToolbar } from '../components/action-toolbar'
 import { TableHeader } from '../components/table-header'
@@ -36,7 +36,10 @@ export const Table = () => {
     setSelectedIds([]), refetch()
   }
 
-  const handleCheckboxChange = (event, itemId) => {
+  const handleCheckboxChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    itemId: string,
+  ) => {
     if (event.target.checked) {
       setSelectedIds([...selectedIds, itemId])
     } else {
@@ -50,13 +53,13 @@ export const Table = () => {
     }
   }
 
-  const handleRestrictUser = async (uuid, hours: RestrictTo) => {
+  const handleRestrictUser = async (uuid: string, hours: RestrictTo) => {
     await restrictUser(uuid, hours)
 
     await refetch()
   }
 
-  const handleUnRestrictUser = async (uuid) => {
+  const handleUnRestrictUser = async (uuid: string) => {
     await unRestrictUser(uuid)
 
     await refetch()
@@ -99,7 +102,9 @@ export const Table = () => {
               <TableRow key={user.id}>
                 <TableCell>
                   <Checkbox
-                    onChange={(event) => handleCheckboxChange(event, user.id)}
+                    onChange={(event) =>
+                      handleCheckboxChange(event, user.id || '')
+                    }
                   />
                   {user.name}
                 </TableCell>
@@ -117,7 +122,7 @@ export const Table = () => {
                     <Button
                       disabled={isUnRestricting}
                       className={css.actionButton}
-                      onClick={() => handleUnRestrictUser(user.id)}
+                      onClick={() => handleUnRestrictUser(user.id || '')}
                       variant="contained"
                       color="default"
                       size="small"
@@ -130,7 +135,10 @@ export const Table = () => {
                         disabled={isRestricting}
                         className={css.restrictButton}
                         onClick={() =>
-                          handleRestrictUser(user.id, RestrictTo.THREE_HOURS)
+                          handleRestrictUser(
+                            user.id || '',
+                            RestrictTo.THREE_HOURS,
+                          )
                         }
                         variant="contained"
                         color="default"
@@ -142,7 +150,10 @@ export const Table = () => {
                         disabled={isRestricting}
                         className={css.restrictButton}
                         onClick={() =>
-                          handleRestrictUser(user.id, RestrictTo.THREE_DAYS)
+                          handleRestrictUser(
+                            user.id || '',
+                            RestrictTo.THREE_DAYS,
+                          )
                         }
                         variant="contained"
                         color="default"

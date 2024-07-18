@@ -1,7 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 
-const toastError = (error: AxiosError) => {
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
+const toastError = (error: any) => {
   if (error.response) {
     const errors = error.response?.data?.message
 
@@ -27,7 +28,9 @@ export async function fetchData(url: string): Promise<any> {
     const response: AxiosResponse = await axios.get(url)
 
     return response.data
-  } catch (error: AxiosError) {
+
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     toastError(error)
 
     return null
@@ -48,7 +51,9 @@ export async function postData<T>(
     })
 
     return response.data
-  } catch (error: AxiosError) {
+
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     toastError(error)
 
     return null
@@ -68,7 +73,9 @@ export async function deleteData(
     })
 
     return response.data
-  } catch (error: AxiosError) {
+
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     toastError(error)
 
     return null
@@ -89,7 +96,9 @@ export async function patchData<T>(
     })
 
     return response.data
-  } catch (error: AxiosError) {
+
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     toastError(error)
 
     return null
